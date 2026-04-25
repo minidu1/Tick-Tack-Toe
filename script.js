@@ -1,6 +1,5 @@
 function GameBoard(){
   const board =[]
-  const cell = []
   const row = 3
   const column = 3
 
@@ -15,4 +14,31 @@ function GameBoard(){
   console.log(board[1][2])
 }
 
+function Player(
+  playerOne = "Player One",
+  playerTwo = "Player Two"
+){
+  const players = [playerOne, playerTwo]
+  let activePlayer = players[0]
+
+  function switchTurn(activePlayer){
+    activePlayer = activePlayer === player[0]? players[1] : players[0]
+  }
+
+  function getActivePlayer(){
+    return activePlayer
+  }
+  console.log(activePlayer)
+
+  return {getActivePlayer}
+}
+
+
+function PlayGame(cell){
+
+}
+
+
 GameBoard()
+const testPlayer = Player("minidu", "who")
+console.log(testPlayer.getActivePlayer())

@@ -10,8 +10,14 @@ function GameBoard(){
       board[i][j]= null
     }
   }
-  console.log(board)
-  console.log(board[1][2])
+
+  function getBoard(){
+    return board
+  }
+
+  // console.log(board)
+  // console.log(board[1][2])
+  return {board, getBoard}
 }
 
 function Player(
@@ -28,18 +34,31 @@ function Player(
   function getActivePlayer(){
     return activePlayer
   }
-  console.log(activePlayer)
 
   return {getActivePlayer,switchTurn}
 }
 
 
-function PlayGame(cell){
+function GameController(clickedCell){
 
+  // make objects
+  const board = GameBoard()
+  console.log(board.getBoard())
+
+  // test functions
+  const testPlayer = Player()
+  console.log(`${testPlayer.getActivePlayer()}'s turn`)
+  let testClick = board.board[0][0]
+  // console.log(testClick)
+
+  function checkAvailableCells(){
+    if (testClick == null){
+      console.log("empty")
+    }
+  }
+
+  //test functions
+  checkAvailableCells()
 }
 
-
-GameBoard()
-const testPlayer = Player("minidu", "who")
-testPlayer.switchTurn()
-console.log(testPlayer.getActivePlayer())
+GameController()

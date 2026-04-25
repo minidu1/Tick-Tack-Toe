@@ -24,7 +24,16 @@ function Player(
   playerOne = "Player One",
   playerTwo = "Player Two"
 ){
-  const players = [playerOne, playerTwo]
+  const players = [
+    {
+      name: playerOne,
+      token: "x"
+    },
+    {
+      name: playerTwo,
+      token: "o"
+    }
+  ]
   let activePlayer = players[0]
 
   function switchTurn(){
@@ -47,13 +56,14 @@ function GameController(clickedCell){
 
   // test functions
   const testPlayer = Player()
-  console.log(`${testPlayer.getActivePlayer()}'s turn`)
+  let activePlayer = testPlayer.getActivePlayer()
+  console.log(`${activePlayer.name}'s turn`)
   let testClick = board.board[0][0]
   // console.log(testClick)
 
   function checkAvailableCells(){
     if (testClick == null){
-      console.log("empty")
+      console.log("empty cell")
     }
   }
 

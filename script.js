@@ -3,11 +3,11 @@ function GameBoard(){
   const row = 3
   const column = 3
 
-  // use for loop and put array into places i want instead of puahing
+  // use for loop and put array into places i want instead of pushing
   for (let i=0; i<row; i++){
     board[i] = []
     for (let j=0; j<column; j++){
-      board[i][j]= null
+      board[i][j]= Cell().makeNewCell()
     }
   }
 
@@ -18,6 +18,15 @@ function GameBoard(){
   // console.log(board)
   // console.log(board[1][2])
   return {board, getBoard}
+}
+
+function Cell(){
+
+  function makeNewCell(){
+    const cell = null
+    return cell
+  }
+  return { makeNewCell }
 }
 
 function Player(
@@ -48,27 +57,35 @@ function Player(
 }
 
 
-function GameController(clickedCell){
+function GameController(){
 
   // make objects
   const board = GameBoard()
   console.log(board.getBoard())
 
   // test functions
-  const testPlayer = Player()
+  const testPlayer = Player("min", "man")
+
   let activePlayer = testPlayer.getActivePlayer()
   console.log(`${activePlayer.name}'s turn`)
-  let testClick = board.board[0][0]
-  // console.log(testClick)
 
-  function checkAvailableCells(){
-    if (testClick == null){
-      console.log("empty cell")
+  function placeToken(row = 0, column = 0){
+    const clickedCell = board.getBoard()[row][column]
+    if (clickedCell !== null){
+      console.log("Cell is already used")
+      console.log(board.getBoard())
+    }
+    else{
+      console.log("Cell is empty")
+      board.getBoard()[row][column] = activePlayer.token
+      console.log(`Cell is now belongs to ${activePlayer.token}`)
+      console.log(board.getBoard())
     }
   }
 
   //test functions
-  checkAvailableCells()
+  placeToken()
+  placeToken()
 }
 
 GameController()

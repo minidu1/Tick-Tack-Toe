@@ -15,8 +15,6 @@ function GameBoard(){
     return board
   }
 
-  // console.log(board)
-  // console.log(board[1][2])
   return {board, getBoard}
 }
 
@@ -64,28 +62,31 @@ function GameController(){
   console.log(board.getBoard())
 
   // test functions
-  const testPlayer = Player("min", "man")
+  const newPlayers = Player("min", "man")
 
-  let activePlayer = testPlayer.getActivePlayer()
-  console.log(`${activePlayer.name}'s turn`)
+  console.log(`${newPlayers.getActivePlayer().name}'s turn`)
 
   function placeToken(row = 0, column = 0){
+
     const clickedCell = board.getBoard()[row][column]
+
     if (clickedCell !== null){
       console.log("Cell is already used")
       console.log(board.getBoard())
     }
     else{
       console.log("Cell is empty")
-      board.getBoard()[row][column] = activePlayer.token
-      console.log(`Cell is now belongs to ${activePlayer.token}`)
+      board.getBoard()[row][column] = newPlayers.getActivePlayer().token
+      console.log(`Cell is now belongs to ${newPlayers.getActivePlayer().token}`)
       console.log(board.getBoard())
+
+      newPlayers.switchTurn()   
+      console.log(`${newPlayers.getActivePlayer().name}'s turn`)
     }
   }
 
-  //test functions
-  placeToken()
-  placeToken()
+  return {placeToken}
 }
 
-GameController()
+const newGame = GameController()
+newGame.placeToken()

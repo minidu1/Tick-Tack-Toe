@@ -89,9 +89,8 @@ function GameController() {
 
   function winGame() {
 
-    console.log("wingame called")
     const currentBoard = board.getBoard()
-    
+
     //Horizontal win
     for (let i = 0; i < currentBoard.length; i++) {
       if (currentBoard[i].every((value, index) => value === currentBoard[i][0] && value !== null)) {
@@ -103,13 +102,24 @@ function GameController() {
 
     // Vertical win
     for (let i = 0; i < currentBoard.length; i++) {
-      for (let j = 0; j < currentBoard[i].length; j++ ){
-        if(currentBoard[0][i] === currentBoard[1][i] && currentBoard[0][i] === currentBoard[2][i] && currentBoard[0][i] !== null){
-          console.log(`${i} Column win`)
-          console.log(`${newPlayers.getActivePlayer().name} is the winner`)
-          return true
-        }
+      if (currentBoard[0][i] === currentBoard[1][i] && currentBoard[0][i] === currentBoard[2][i] && currentBoard[0][i] !== null) {
+        console.log(`${i} Column win`)
+        console.log(`${newPlayers.getActivePlayer().name} is the winner`)
+        return true
       }
+    }
+
+    //Diagonal Win
+    if (currentBoard[0][0] === currentBoard[1][1] && currentBoard[0][0] === currentBoard[2][2] && currentBoard[0][0] !== null) {
+      console.log(`Diagonal win`)
+      console.log(`${newPlayers.getActivePlayer().name} is the winner`)
+      return true
+    }
+    
+    if (currentBoard[0][2] === currentBoard[1][1] && currentBoard[0][2] === currentBoard[2][0] && currentBoard[0][2] !== null) {
+      console.log(`Diagonal win`)
+      console.log(`${newPlayers.getActivePlayer().name} is the winner`)
+      return true
     }
 
     return false
@@ -119,9 +129,9 @@ function GameController() {
 }
 
 const newGame = GameController()
-newGame.placeToken(0, 0)
+newGame.placeToken(0, 2)
 newGame.placeToken(0, 1)
-newGame.placeToken(1, 0)
+newGame.placeToken(1, 1)
 newGame.placeToken(1, 2)
 newGame.placeToken(2, 0)
 

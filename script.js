@@ -76,8 +76,8 @@ function GameController() {
       board.getBoard()[row][column] = newPlayers.getActivePlayer().token
       console.log(`Placed token ${newPlayers.getActivePlayer().token}`)
       console.log(board.getBoard())
-      
-      if (winGame()){
+
+      if (winGame()) {
         console.log("Game controller stoped")
         return true
       }
@@ -88,18 +88,27 @@ function GameController() {
   }
 
   function winGame() {
+
     console.log("wingame called")
     const currentBoard = board.getBoard()
-
-    for (i = 0; i < currentBoard.length; i++) {
-
+    
+    //Horizontal win
+    for (let i = 0; i < currentBoard.length; i++) {
       if (currentBoard[i].every((value, index) => value === currentBoard[i][0] && value !== null)) {
+        console.log(`${i} Row win`)
         console.log(`${newPlayers.getActivePlayer().name} is the winner`)
         return true
-        // break
       }
-      else {
-        console.log("not win")
+    }
+
+    // Vertical win
+    for (let i = 0; i < currentBoard.length; i++) {
+      for (let j = 0; j < currentBoard[i].length; j++ ){
+        if(currentBoard[0][i] === currentBoard[1][i] && currentBoard[0][i] === currentBoard[2][i] && currentBoard[0][i] !== null){
+          console.log(`${i} Column win`)
+          console.log(`${newPlayers.getActivePlayer().name} is the winner`)
+          return true
+        }
       }
     }
 
@@ -110,12 +119,11 @@ function GameController() {
 }
 
 const newGame = GameController()
-newGame.placeToken(2, 0)
+newGame.placeToken(0, 0)
+newGame.placeToken(0, 1)
 newGame.placeToken(1, 0)
-newGame.placeToken(2, 1)
-newGame.placeToken(1, 1)
-newGame.placeToken(0, 2)
 newGame.placeToken(1, 2)
+newGame.placeToken(2, 0)
 
 
 

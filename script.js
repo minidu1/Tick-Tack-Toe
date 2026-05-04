@@ -31,11 +31,13 @@ function Player(
   const players = [
     {
       name: playerOne,
-      token: "x"
+      token: "x",
+      wins: 0 
     },
     {
       name: playerTwo,
-      token: "o"
+      token: "o",
+      wins: 0
     }
   ]
   let activePlayer = players[0]
@@ -48,18 +50,18 @@ function Player(
     return activePlayer
   }
 
-  return { getActivePlayer, switchTurn }
+  function resetPlayer(){
+    activePlayer = players[0]
+  }
+  return { getActivePlayer, switchTurn, resetPlayer}
 }
 
 
-function GameController() {
+function GameController(newPlayers) {
 
   // make objects
-  const board = GameBoard()
+  let board = GameBoard()
   console.log(board.getBoard())
-
-  // test functions
-  const newPlayers = Player("Player 1", "player 2")
 
   console.log(`${newPlayers.getActivePlayer().name}'s turn`)
 
@@ -77,8 +79,9 @@ function GameController() {
       console.log(`Placed token ${newPlayers.getActivePlayer().token}`)
       console.log(board.getBoard())
 
-      if (winGame()) {
-        console.log("Game controller stoped")
+      if (winRoundDetector()) {
+        winGameDetector()
+        console.log(`${newPlayers.getActivePlayer().name}'s turn`)
         return true
       }
 
@@ -87,7 +90,7 @@ function GameController() {
     }
   }
 
-  function winGame() {
+  function winRoundDetector() {
 
     const currentBoard = board.getBoard()
 
@@ -95,7 +98,7 @@ function GameController() {
     for (let i = 0; i < currentBoard.length; i++) {
       if (currentBoard[i].every((value, index) => value === currentBoard[i][0] && value !== null)) {
         console.log(`${i} Row win`)
-        console.log(`${newPlayers.getActivePlayer().name} is the winner`)
+        console.log(`${newPlayers.getActivePlayer().name} won the round`)
         return true
       }
     }
@@ -104,7 +107,7 @@ function GameController() {
     for (let i = 0; i < currentBoard.length; i++) {
       if (currentBoard[0][i] === currentBoard[1][i] && currentBoard[0][i] === currentBoard[2][i] && currentBoard[0][i] !== null) {
         console.log(`${i} Column win`)
-        console.log(`${newPlayers.getActivePlayer().name} is the winner`)
+        console.log(`${newPlayers.getActivePlayer().name} won the round`)
         return true
       }
     }
@@ -112,48 +115,37 @@ function GameController() {
     //Diagonal Win
     if (currentBoard[0][0] === currentBoard[1][1] && currentBoard[0][0] === currentBoard[2][2] && currentBoard[0][0] !== null) {
       console.log(`Diagonal win`)
-      console.log(`${newPlayers.getActivePlayer().name} is the winner`)
+      console.log(`${newPlayers.getActivePlayer().name} won the round`)
       return true
     }
-    
+
     if (currentBoard[0][2] === currentBoard[1][1] && currentBoard[0][2] === currentBoard[2][0] && currentBoard[0][2] !== null) {
       console.log(`Diagonal win`)
-      console.log(`${newPlayers.getActivePlayer().name} is the winner`)
+      console.log(`${newPlayers.getActivePlayer().name} won the round`)
       return true
     }
 
     return false
   }
 
-  return { placeToken }
+  function winGameDetector(){
+    newPlayers.getActivePlayer().wins++
+
+    if (newPlayers.getActivePlayer().wins <= 3){
+      console.log(newPlayers.getActivePlayer().wins)
+      board = GameBoard()
+      newPlayers.resetPlayer()
+    }
+  }
+  
+  return { placeToken}
 }
 
-const newGame = GameController()
+const newPlayers = Player("Player 1", "player 2")
+const newGame = GameController(newPlayers)
+
 newGame.placeToken(0, 2)
 newGame.placeToken(0, 1)
 newGame.placeToken(1, 1)
 newGame.placeToken(1, 2)
 newGame.placeToken(2, 0)
-
-
-
-// board[0][1]
-// board[0][2]
-// board[0][3]
-
-// board[1][1]
-// board[1][2]
-// board[1][3]
-
-
-// board[0][0]
-// board[1][0]
-// board[2][0]
-
-// board[0][0]
-// board[1][1]
-// board[2][2]
-
-// board[0][2]
-// board[1][1]
-// board[2][0]

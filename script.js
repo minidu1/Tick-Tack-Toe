@@ -50,10 +50,15 @@ function Player(
     return activePlayer
   }
 
-  function resetPlayer(){
+  function resetActivePlayer(){
     activePlayer = players[0]
   }
-  return { getActivePlayer, switchTurn, resetPlayer}
+
+  function resetWins(){
+    players.forEach( player => player.wins = 0)
+  }
+
+  return { getActivePlayer, switchTurn, resetActivePlayer, resetWins}
 }
 
 
@@ -81,6 +86,7 @@ function GameController(newPlayers) {
 
       if (winRoundDetector()) {
         addWinToPlayer()
+        resetBoard()
         resetGame()
         return true
       }
@@ -132,12 +138,18 @@ function GameController(newPlayers) {
     newPlayers.getActivePlayer().wins++
       console.log(newPlayers.getActivePlayer().wins)
   }
-  function resetGame(){
+  function resetBoard(){
       board = GameBoard()
-      newPlayers.resetPlayer()
+      newPlayers.resetActivePlayer()
       console.log(`${newPlayers.getActivePlayer().name}'s turn`)
   }
   
+  function resetGame(){
+    resetBoard()
+    newPlayers.resetActivePlayer()
+    newPlayers.resetWins()
+    console.log(newPlayers.getActivePlayer().wins)
+  }
   return { placeToken}
 }
 

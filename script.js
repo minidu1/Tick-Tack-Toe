@@ -80,8 +80,8 @@ function GameController(newPlayers) {
       console.log(board.getBoard())
 
       if (winRoundDetector()) {
-        winGameDetector()
-        console.log(`${newPlayers.getActivePlayer().name}'s turn`)
+        addWinToPlayer()
+        resetGame()
         return true
       }
 
@@ -128,14 +128,14 @@ function GameController(newPlayers) {
     return false
   }
 
-  function winGameDetector(){
+  function addWinToPlayer(){
     newPlayers.getActivePlayer().wins++
-
-    if (newPlayers.getActivePlayer().wins <= 3){
       console.log(newPlayers.getActivePlayer().wins)
+  }
+  function resetGame(){
       board = GameBoard()
       newPlayers.resetPlayer()
-    }
+      console.log(`${newPlayers.getActivePlayer().name}'s turn`)
   }
   
   return { placeToken}

@@ -58,6 +58,12 @@ function Player(
     players.forEach( player => player.wins = 0)
   }
 
+  function getScore(){
+    players.forEach( player => {
+      return player.wins
+    });
+  }
+
   return { getActivePlayer, switchTurn, resetActivePlayer, resetWins}
 }
 
@@ -84,10 +90,14 @@ function GameController(newPlayers) {
       console.log(`Placed token ${newPlayers.getActivePlayer().token}`)
       console.log(board.getBoard())
 
-      if (winRoundDetector()) {
+      if (winRoundDetector() ) {
         addWinToPlayer()
         resetBoard()
-        resetGame()
+        return true
+      }
+
+       if (checkIsBoardFull() ) {
+        resetBoard()
         return true
       }
 
@@ -146,10 +156,17 @@ function GameController(newPlayers) {
   
   function resetGame(){
     resetBoard()
-    newPlayers.resetActivePlayer()
     newPlayers.resetWins()
     console.log(newPlayers.getActivePlayer().wins)
   }
+
+  function checkIsBoardFull(){
+    if(board.getBoard().every(row =>
+       row.every(cell => cell !== null))){
+      return true
+    }
+  }
+  
   return { placeToken}
 }
 

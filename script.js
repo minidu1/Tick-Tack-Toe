@@ -59,12 +59,10 @@ function Player(
   }
 
   function getScore(){
-    players.forEach( player => {
-      return player.wins
-    });
+    return players.map(player => player.wins)
   }
 
-  return { getActivePlayer, switchTurn, resetActivePlayer, resetWins}
+  return { getActivePlayer, switchTurn, resetActivePlayer, resetWins, getScore}
 }
 
 
@@ -92,6 +90,7 @@ function GameController(newPlayers) {
 
       if (winRoundDetector() ) {
         addWinToPlayer()
+        displayScore()
         resetBoard()
         return true
       }
@@ -152,6 +151,7 @@ function GameController(newPlayers) {
       board = GameBoard()
       newPlayers.resetActivePlayer()
       console.log(`${newPlayers.getActivePlayer().name}'s turn`)
+      console.log(board.getBoard())
   }
   
   function resetGame(){
@@ -165,6 +165,11 @@ function GameController(newPlayers) {
        row.every(cell => cell !== null))){
       return true
     }
+  }
+
+  function displayScore(){
+    console.log(`Player 1's score is ${newPlayers.getScore()[0]}`) 
+    console.log(`Player 2's score is ${newPlayers.getScore()[1]}`) 
   }
   
   return { placeToken}

@@ -1,0 +1,45 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body, h1, h2, h3, h4, p, figure, blockquote, dl, dd {
+  margin: 0;
+}
+
+ul, ol {
+  list-style: none;
+  padding: 0;
+}
+
+:root {
+  --background-color: #ccc;
+  --border: 2px solid rgba(0, 0, 0, 0.61);
+}
+
+body{
+    background-color: var(--background-color);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    border: var(--border);
+    margin: 5px;
+}
+
+.header-section{
+    font-size: 3rem;
+    text-align: center;
+    height: 100px;
+    
+    margin: 20px;
+    border: var(--border);
+}
+
+.body-section{
+   flex: 1;
+
+    display: grid;
+    place-items: center;
+    margin: 20px;
+
+    border: var(--border);
+}

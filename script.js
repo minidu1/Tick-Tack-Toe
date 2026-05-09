@@ -165,6 +165,9 @@ function GameController(newPlayers) {
        row.every(cell => cell !== null))){
       return true
     }
+    else{
+      return false
+    }
   }
 
   function displayScore(){
@@ -178,8 +181,8 @@ function GameController(newPlayers) {
 const newPlayers = Player("Player 1", "player 2")
 const newGame = GameController(newPlayers)
 
-newGame.placeToken(0, 2)
-newGame.placeToken(0, 1)
-newGame.placeToken(1, 1)
-newGame.placeToken(1, 2)
-newGame.placeToken(2, 0)
+// newGame.placeToken(0, 2)
+// newGame.placeToken(0, 1)
+// newGame.placeToken(1, 1)
+// newGame.placeToken(1, 2)
+// newGame.placeToken(2, 0)

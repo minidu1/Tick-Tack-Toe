@@ -13,25 +13,43 @@ ul, ol {
 
 :root {
   --background-color: #ccc;
-  --border: 2px solid rgba(0, 0, 0, 0.61);
+  /* --border: 2px solid rgba(0, 0, 0, 0.61); */
+}
+
+div{
+  border: var(--border);
 }
 
 body{
     background-color: var(--background-color);
     height: 100vh;
     display: flex;
+    gap: 10px;
     flex-direction: column;
     border: var(--border);
-    margin: 5px;
 }
 
 .header-section{
     font-size: 3rem;
     text-align: center;
-    height: 100px;
+    height: 50px;
     
-    margin: 20px;
-    border: var(--border);
+    margin: 15px;
+
+}
+
+.turn-section{
+  font-size: 30px;
+  text-align: center;
+}
+
+.score-section {
+  display: flex;
+  justify-content: space-around;
+}
+
+.player{
+  font-size: 20px;
 }
 
 .body-section{
@@ -42,13 +60,21 @@ body{
     grid-template-rows: repeat(3, 100px);
     place-content: center;
 
-    /* place-items: center; */
     margin: 20px;
-
-    border: var(--border);
 }
 
 .cell{
   border: 1px solid black;
   padding: 22px;
+  font-size: 4rem;
+  text-align: center;
+}
+
+.restart{
+  height: 40px;
+  width: 120px;
+  margin: 50px;
+  font-size: 15px;
+
+  align-self: center;
 }

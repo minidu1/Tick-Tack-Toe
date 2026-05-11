@@ -52,7 +52,7 @@ body{
   font-size: 20px;
 }
 
-.body-section{
+.board-section{
    flex: 1;
 
     display: grid;

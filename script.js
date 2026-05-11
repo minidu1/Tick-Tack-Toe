@@ -175,14 +175,34 @@ function GameController(newPlayers) {
     console.log(`Player 2's score is ${newPlayers.getScore()[1]}`) 
   }
   
-  return { placeToken}
+  return { 
+    placeToken,
+    getBoard : board.getBoard
+  }
 }
 
-const newPlayers = Player("Player 1", "player 2")
-const newGame = GameController(newPlayers)
-
+// const newPlayers = Player("Player 1", "player 2")
+// const newGame = GameController(newPlayers)
 // newGame.placeToken(0, 2)
-// newGame.placeToken(0, 1)
-// newGame.placeToken(1, 1)
-// newGame.placeToken(1, 2)
-// newGame.placeToken(2, 0)
+
+function ScreenController(){
+
+  const players = Player("Player 1", "player 2")
+  const game = GameController(players)
+  const board = game.getBoard()
+
+  const boardDiv = document.querySelector(".board-section")
+
+  for(let row = 0; row < board.length; row++){
+    for(let column = 0; column < board[row].length; column++ ){
+      const cell = document.createElement("button")
+      cell.classList.add("cell")
+      cell.dataset.row = row
+      cell.dataset.column = column
+      boardDiv.appendChild(cell)
+    }
+  }
+
+}
+
+ScreenController()

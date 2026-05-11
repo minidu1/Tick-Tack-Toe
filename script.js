@@ -74,7 +74,7 @@ function GameController(newPlayers) {
 
   console.log(`${newPlayers.getActivePlayer().name}'s turn`)
 
-  function placeToken(row = 0, column = 0) {
+  function placeToken(row , column ) {
 
     const clickedCell = board.getBoard()[row][column]
 
@@ -202,6 +202,17 @@ function ScreenController(){
       boardDiv.appendChild(cell)
     }
   }
+
+  
+    const cells = document.querySelectorAll(".cell")
+    cells.forEach(cell => {
+      cell.addEventListener("click", () =>{
+        game.placeToken(
+          parseInt(cell.dataset.row), 
+          parseInt(cell.dataset.column))
+      } )
+    })
+
 
 }
 

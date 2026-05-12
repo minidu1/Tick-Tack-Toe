@@ -32,7 +32,7 @@ function Player(
     {
       name: playerOne,
       token: "x",
-      wins: 0 
+      wins: 0
     },
     {
       name: playerTwo,
@@ -50,19 +50,19 @@ function Player(
     return activePlayer
   }
 
-  function resetActivePlayer(){
+  function resetActivePlayer() {
     activePlayer = players[0]
   }
 
-  function resetWins(){
-    players.forEach( player => player.wins = 0)
+  function resetWins() {
+    players.forEach(player => player.wins = 0)
   }
 
-  function getScore(){
+  function getScore() {
     return players.map(player => player.wins)
   }
 
-  return { getActivePlayer, switchTurn, resetActivePlayer, resetWins, getScore}
+  return { getActivePlayer, switchTurn, resetActivePlayer, resetWins, getScore }
 }
 
 
@@ -74,7 +74,7 @@ function GameController(newPlayers) {
 
   console.log(`${newPlayers.getActivePlayer().name}'s turn`)
 
-  function placeToken(row , column ) {
+  function placeToken(row, column) {
 
     const clickedCell = board.getBoard()[row][column]
 
@@ -88,14 +88,14 @@ function GameController(newPlayers) {
       console.log(`Placed token ${newPlayers.getActivePlayer().token}`)
       console.log(board.getBoard())
 
-      if (winRoundDetector() ) {
+      if (winRoundDetector()) {
         addWinToPlayer()
         displayScore()
         resetBoard()
         return true
       }
 
-       if (checkIsBoardFull() ) {
+      if (checkIsBoardFull()) {
         resetBoard()
         return true
       }
@@ -143,41 +143,41 @@ function GameController(newPlayers) {
     return false
   }
 
-  function addWinToPlayer(){
+  function addWinToPlayer() {
     newPlayers.getActivePlayer().wins++
-      console.log(newPlayers.getActivePlayer().wins)
+    console.log(newPlayers.getActivePlayer().wins)
   }
-  function resetBoard(){
-      board = GameBoard()
-      newPlayers.resetActivePlayer()
-      console.log(`${newPlayers.getActivePlayer().name}'s turn`)
-      console.log(board.getBoard())
+  function resetBoard() {
+    board = GameBoard()
+    newPlayers.resetActivePlayer()
+    console.log(`${newPlayers.getActivePlayer().name}'s turn`)
+    console.log(board.getBoard())
   }
-  
-  function resetGame(){
+
+  function resetGame() {
     resetBoard()
     newPlayers.resetWins()
     console.log(newPlayers.getActivePlayer().wins)
   }
 
-  function checkIsBoardFull(){
-    if(board.getBoard().every(row =>
-       row.every(cell => cell !== null))){
+  function checkIsBoardFull() {
+    if (board.getBoard().every(row =>
+      row.every(cell => cell !== null))) {
       return true
     }
-    else{
+    else {
       return false
     }
   }
 
-  function displayScore(){
-    console.log(`Player 1's score is ${newPlayers.getScore()[0]}`) 
-    console.log(`Player 2's score is ${newPlayers.getScore()[1]}`) 
+  function displayScore() {
+    console.log(`Player 1's score is ${newPlayers.getScore()[0]}`)
+    console.log(`Player 2's score is ${newPlayers.getScore()[1]}`)
   }
-  
-  return { 
+
+  return {
     placeToken,
-    getBoard : board.getBoard
+    getBoard: board.getBoard
   }
 }
 
@@ -185,7 +185,7 @@ function GameController(newPlayers) {
 // const newGame = GameController(newPlayers)
 // newGame.placeToken(0, 2)
 
-function ScreenController(){
+function ScreenController() {
 
   const players = Player("Player 1", "player 2")
   const game = GameController(players)
@@ -193,26 +193,39 @@ function ScreenController(){
 
   const boardDiv = document.querySelector(".board-section")
 
-  for(let row = 0; row < board.length; row++){
-    for(let column = 0; column < board[row].length; column++ ){
-      const cell = document.createElement("button")
-      cell.classList.add("cell")
-      cell.dataset.row = row
-      cell.dataset.column = column
-      boardDiv.appendChild(cell)
-    }
-  }
+  function makeBoard() {
+    boardDiv.textContent = ""
+    for (let row = 0; row < board.length; row++) {
+      for (let column = 0; column < board[row].length; column++) {
+        const cell = document.createElement("button")
+        cell.classList.add("cell")
+        cell.dataset.row = row
+        cell.dataset.column = column
 
-  
+        if (board[row][column] !== null) {
+          cell.textContent = board[row][column]
+        }
+
+        boardDiv.appendChild(cell)
+      }
+    }
+
     const cells = document.querySelectorAll(".cell")
+
     cells.forEach(cell => {
-      cell.addEventListener("click", () =>{
+      cell.addEventListener("click", () => {
+        console.log("cell clicked")
         game.placeToken(
-          parseInt(cell.dataset.row), 
+          parseInt(cell.dataset.row),
           parseInt(cell.dataset.column))
-      } )
+        makeBoard()
+
+      })
     })
 
+  }
+
+  makeBoard()
 
 }
 

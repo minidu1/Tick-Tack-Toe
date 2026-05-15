@@ -93,12 +93,12 @@ function GameController(newPlayers, board) {
         addWinToPlayer()
         displayScore()
         resetBoard()
-        return true
+        return "round-win"
       }
 
       if (checkIsBoardFull()) {
         resetBoard()
-        return true
+        return "board-full"
       }
 
       newPlayers.switchTurn()
@@ -221,12 +221,17 @@ function ScreenController() {
     cells.forEach(cell => {
       cell.addEventListener("click", () => {
         console.log("cell clicked")
-        game.placeToken(
+        const result = game.placeToken(
           parseInt(cell.dataset.row),
           parseInt(cell.dataset.column))
-        makeBoard()
-        console.log(board)
 
+          if (result === "round-win"){
+            alert("Win")
+          }
+          else if (result === "board-full"){
+            alert("Draw")
+          }
+        makeBoard()
       })
     })
 

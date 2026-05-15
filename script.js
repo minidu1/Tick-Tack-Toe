@@ -66,10 +66,10 @@ function Player(
 }
 
 
-function GameController(newPlayers) {
+function GameController(newPlayers, board) {
 
   // make objects
-  let board = GameBoard()
+  // let board = GameBoard()
   console.log(board.getBoard())
 
   console.log(`${newPlayers.getActivePlayer().name}'s turn`)
@@ -89,6 +89,7 @@ function GameController(newPlayers) {
       console.log(board.getBoard())
 
       if (winRoundDetector()) {
+        console.log(`win round`)
         addWinToPlayer()
         displayScore()
         resetBoard()
@@ -148,7 +149,10 @@ function GameController(newPlayers) {
     console.log(newPlayers.getActivePlayer().wins)
   }
   function resetBoard() {
-    board = GameBoard()
+    board.getBoard().forEach(row => {
+      row.forEach((cell, index) => row[index] = null)
+    })
+
     newPlayers.resetActivePlayer()
     console.log(`${newPlayers.getActivePlayer().name}'s turn`)
     console.log(board.getBoard())
@@ -188,8 +192,10 @@ function GameController(newPlayers) {
 function ScreenController() {
 
   const players = Player("Player 1", "player 2")
-  const game = GameController(players)
-  const board = game.getBoard()
+  const gameBoard = GameBoard()
+  const game = GameController(players, gameBoard)
+  let board = game.getBoard()
+  console.log(board)
 
   const boardDiv = document.querySelector(".board-section")
 
@@ -219,6 +225,7 @@ function ScreenController() {
           parseInt(cell.dataset.row),
           parseInt(cell.dataset.column))
         makeBoard()
+        console.log(board)
 
       })
     })

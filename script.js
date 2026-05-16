@@ -98,7 +98,7 @@ function GameController(newPlayers, board) {
       }
 
       if (checkIsBoardFull()) {
-        resetBoard()
+        // resetBoard()
         return {status: "draw", winner: newPlayers.getActivePlayer()}
       }
 
@@ -183,7 +183,8 @@ function GameController(newPlayers, board) {
 
   return {
     placeToken,
-    getBoard: board.getBoard
+    getBoard: board.getBoard,
+    resetBoard
   }
 }
 
@@ -196,6 +197,31 @@ function ScreenController() {
   console.log(board)
 
   const boardDiv = document.querySelector(".board-section")
+
+      function displayPopup(message){
+      const popupDiv = document.querySelector(".popup")
+      const text = document.createElement("div")
+      popupDiv.textContent = ""
+
+      text.textContent= message
+      popupDiv.appendChild(text)
+
+      const nextRoundBtn = document.createElement("button")
+      nextRoundBtn.classList.add("next-round")
+      nextRoundBtn.textContent= "Next round"
+      popupDiv.appendChild(nextRoundBtn)
+
+      boardDiv.style.pointerEvents = 'none'
+
+      nextRoundBtn.addEventListener("click", () => {
+        game.resetBoard()
+        makeBoard()
+        popupDiv.style.display = 'none'
+        boardDiv.style.pointerEvents = 'auto'
+      })
+
+      popupDiv.style.display = 'flex';
+    }
 
   function makeBoard() {
     boardDiv.textContent = ""
@@ -214,21 +240,6 @@ function ScreenController() {
       }
     }
 
-    function displayPopup(){
-      const popupDiv = document.querySelector(".popup")
-      const text = document.createElement("div")
-      const nextRoundBtn = document.createElement("button")
-      nextRoundBtn.classList.add("next-round")
-      nextRoundBtn.textContent= "Next round"
-
-      text.textContent= "You won"
-      popupDiv.appendChild(text)
-      popupDiv.appendChild(nextRoundBtn)
-
-      popupDiv.style.display = 'flex';
-    }
-    displayPopup()
-
     const cells = document.querySelectorAll(".cell")
 
     cells.forEach(cell => {
@@ -240,11 +251,11 @@ function ScreenController() {
 
           if (result.status === "win"){
             makeBoard()
-            alert(`${result.winner.name} won the round`)
+            displayPopup(`${result.winner.name} won the round`)
           }
           else if (result.status === "draw"){
             makeBoard()
-            alert("Draw")
+            displayPopup("This round is a Draw")
           }
           else{makeBoard()}
       })

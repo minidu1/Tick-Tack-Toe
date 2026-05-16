@@ -82,6 +82,7 @@ function GameController(newPlayers, board) {
       console.log("Cell is already used. Please click empty cell")
       console.log(`${newPlayers.getActivePlayer().name}'s turn`)
       console.log(board.getBoard())
+      return {status: "invalid-cell"}
     }
     else {
       board.getBoard()[row][column] = newPlayers.getActivePlayer().token
@@ -92,17 +93,18 @@ function GameController(newPlayers, board) {
         console.log(`win round`)
         addWinToPlayer()
         displayScore()
-        resetBoard()
-        return "round-win"
+        // resetBoard()
+        return {status: "win", winner: newPlayers.getActivePlayer()}
       }
 
       if (checkIsBoardFull()) {
         resetBoard()
-        return "board-full"
+        return {status: "draw", winner: newPlayers.getActivePlayer()}
       }
 
       newPlayers.switchTurn()
       console.log(`${newPlayers.getActivePlayer().name}'s turn`)
+      return {status: "none"}
     }
   }
 
@@ -185,10 +187,6 @@ function GameController(newPlayers, board) {
   }
 }
 
-// const newPlayers = Player("Player 1", "player 2")
-// const newGame = GameController(newPlayers)
-// newGame.placeToken(0, 2)
-
 function ScreenController() {
 
   const players = Player("Player 1", "player 2")
@@ -216,6 +214,20 @@ function ScreenController() {
       }
     }
 
+    function displayPopup(){
+      const popupDiv = document.querySelector(".popup")
+      const text = document.createElement("div")
+      const restartBtn = document.querySelector(".restart")
+      const newRestartBtn = restartBtn.cloneNode(true);
+
+      text.textContent= "You won"
+      popupDiv.appendChild(text)
+      popupDiv.appendChild(newRestartBtn)
+
+      popupDiv.style.display = 'flex';
+    }
+    displayPopup()
+
     const cells = document.querySelectorAll(".cell")
 
     cells.forEach(cell => {
@@ -225,13 +237,15 @@ function ScreenController() {
           parseInt(cell.dataset.row),
           parseInt(cell.dataset.column))
 
-          if (result === "round-win"){
-            alert("Win")
+          if (result.status === "win"){
+            makeBoard()
+            alert(`${result.winner.name} won the round`)
           }
-          else if (result === "board-full"){
+          else if (result.status === "draw"){
+            makeBoard()
             alert("Draw")
           }
-        makeBoard()
+          else{makeBoard()}
       })
     })
 

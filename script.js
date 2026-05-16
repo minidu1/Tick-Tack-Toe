@@ -217,12 +217,13 @@ function ScreenController() {
     function displayPopup(){
       const popupDiv = document.querySelector(".popup")
       const text = document.createElement("div")
-      const restartBtn = document.querySelector(".restart")
-      const newRestartBtn = restartBtn.cloneNode(true);
+      const nextRoundBtn = document.createElement("button")
+      nextRoundBtn.classList.add("next-round")
+      nextRoundBtn.textContent= "Next round"
 
       text.textContent= "You won"
       popupDiv.appendChild(text)
-      popupDiv.appendChild(newRestartBtn)
+      popupDiv.appendChild(nextRoundBtn)
 
       popupDiv.style.display = 'flex';
     }

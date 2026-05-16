@@ -65,13 +65,13 @@ body{
 
 .popup{
   flex-direction: column;
+  justify-content: space-evenly;
 
   position: absolute;
   top: 100px;
   left: 50%;
   transform: translateX(-50%);
   
-  /* padding: 20px 40px; */
   height: 120px;
   width: 400px;
   border-radius: 12px;
@@ -89,7 +89,7 @@ body{
   display: none;
 }
 
-.cell{
+button.cell{
   border: 1px solid black;
   padding: 22px;
   font-size: 4rem;
@@ -99,7 +99,15 @@ body{
 .restart{
   height: 40px;
   width: 120px;
-  margin: 25px;
+  margin: 40px;
+  font-size: 15px;
+
+  align-self: center;
+}
+
+.next-round{
+  height: 40px;
+  width: 120px;
   font-size: 15px;
 
   align-self: center;
